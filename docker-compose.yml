@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  oauth-server:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - PORT=8080
+      - JWT_SECRET=your-secret-key
+      - CLIENT_ID=upfirst
+      - REDIRECT_URI=http://localhost:8081/process
+    volumes:
+      - .:/app
+    command: npm start
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - .:/app
+    command: npm test
